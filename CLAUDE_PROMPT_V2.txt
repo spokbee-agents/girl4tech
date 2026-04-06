@@ -1,0 +1,23 @@
+You are an Elite Frontend Engineer building Karina C's personal website: girl4tech.com.
+The user explicitly rejected the "cyborg/hacker/terminal" vibe. The new aesthetic is "Organic Spatial (Calm, Invisible Tech)". 
+
+Think Apple Vision Pro meets nature. The philosophy is that the best technology is invisible, serene, and natural.
+
+Aesthetic Guidelines:
+- Color Palette: Soft, airy gradients (e.g., fluid blurs of pale peach, serene blue, and soft white). Backgrounds should be light (e.g., `#FAFAFA` or `#F5F5F7`), NOT dark mode.
+- Typography: Elegant and highly legible. Use `Inter` for clean sans-serif UI elements, and a beautiful serif (like `Playfair Display` or `Cormorant Garamond`) for large, editorial statement headers.
+- UI Elements: Frosted glassmorphism (`backdrop-filter: blur(40px)`, white/10 backgrounds, subtle white borders), heavy use of whitespace, and rounded, organic shapes.
+- Motion: Extreme smoothness. Use `framer-motion` for slow, breathing animations, gentle fade-ins on scroll, and fluid hovering. Nothing should blink, type rapidly, or feel erratic.
+
+Rewrite `src/app/page.tsx` as a single-page interactive layout implementing these 3 sections:
+
+1. The "Breathe" Hero: A massive, centered, elegant serif statement: "Technology should feel like magic, not mechanics." Below it, a frosted glass pill containing Karina's introduction: "I'm Karina C. I build generative infrastructure for the physical world."
+2. The Organic Manifesto: A staggered, narrative-driven section with plenty of whitespace. The text explains her philosophy: "Software is an ephemeral service. Interfaces shouldn't be static menus; they should generate themselves to solve human problems in real-time."
+3. The Floating Work Showcase: 3 beautiful, frosted glass cards gently floating or bobbing via framer-motion. They represent her focus areas: "Generative Configuration", "Spatial Computing", and "The Agent Economy".
+
+Tasks:
+1. Update `src/app/layout.tsx` to include `Playfair_Display` and `Inter` from `next/font/google`. Apply them globally.
+2. Update `src/app/globals.css` with the new light-mode, fluid gradient background rules. Remove the old dark mode/terminal colors.
+3. Overwrite `src/app/page.tsx` entirely with the new Organic Spatial design using `framer-motion` and `lucide-react` (for subtle, minimal icons if needed).
+4. Commit everything to git with message "refactor: redesign girl4tech to Organic Spatial aesthetic" and push to the remote repository.
+5. Exit gracefully.

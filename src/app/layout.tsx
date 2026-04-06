@@ -1,35 +1,38 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk, Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
-});
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "girl4tech — Karina C",
-  description: "Industrial Spatial Computing. The End of Software. Built on Spokbee.",
+  description: "Technology should feel like magic, not mechanics.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${spaceGrotesk.variable} ${inter.variable}`}>
-      <body className="antialiased font-sans">{children}</body>
+    <html
+      lang="en"
+      className={`${inter.variable} ${playfairDisplay.variable} h-full antialiased selection:bg-black/10`}
+    >
+      <body className="min-h-full flex flex-col bg-[#FAFAFA] text-[#1A1A1A]">
+        {children}
+      </body>
     </html>
   );
 }

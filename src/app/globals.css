@@ -2,27 +2,28 @@
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular;
-  --font-display: var(--font-space), ui-sans-serif, system-ui;
+  --font-display: var(--font-playfair), ui-sans-serif, system-ui;
   
-  --color-void: #09090B;
-  --color-foundry: #0C0C0F;
-  --color-plate: #141418;
-  --color-signal: #FF6B00;
-  --color-machine: #00FF88;
+  --color-spatial-bg: #FAFAFA;
+  --color-spatial-card: rgba(255, 255, 255, 0.4);
+  --color-spatial-border: rgba(255, 255, 255, 0.5);
+  --color-spatial-text-primary: #1A1A1A;
+  --color-spatial-text-secondary: #666666;
 }
 
 body {
-  background-color: var(--color-void);
-  color: #A1A1AA;
+  background-color: var(--color-spatial-bg);
+  color: var(--color-spatial-text-primary);
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center center;
+    radial-gradient(at 0% 0%, rgba(245, 235, 255, 1) 0%, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(235, 245, 255, 1) 0%, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(245, 255, 240, 1) 0%, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 240, 245, 1) 0%, transparent 50%);
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 ::selection {
-  background-color: rgba(255, 107, 0, 0.3);
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #000;
 }
