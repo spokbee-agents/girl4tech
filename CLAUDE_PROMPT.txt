@@ -1,0 +1,21 @@
+You are an Elite Frontend Engineer building Karina C's personal website: girl4tech.com.
+The theme is 'Industrial Spatial Computing', mapping to the Spokbee 4.0 aesthetic:
+- #09090B Dark mode background
+- JetBrains Mono (data/body), Space Grotesk (headers), and Inter (subheaders).
+- Signal Orange (#FF6B00) and Machine Green (#00FF88) accents.
+- 'End of Software' manifesto vibe.
+
+I need you to build a stunning Next.js homepage (replace `src/app/page.tsx`) that implements the following 3 sections using Tailwind CSS, `framer-motion`, and `lucide-react`:
+
+1. The Anti-Portfolio Hero: A dark, terminal/chat-like UI where an AI Agent simulates typing: 'Initializing girl4tech... Connecting to Spokbee Architect...' with a glowing green status dot. 
+2. The End of Software Manifesto: Clean, brutalist text block explaining that static UIs are dead, interfaces should be generated dynamically, and you are building the 'Configurator Factory'.
+3. Swarm Telemetry (The Glass Box): A glassmorphic card (bg: `rgba(20,20,24,0.7)`, blur: `24px`, border: `rgba(255,255,255,0.06)`, border-radius: `16px`) that displays a simulated live scrolling feed of background agents (e.g., 'Agent 1: Compiling GLB payload...', 'Agent 2: Indexing CAD parameters'). Use JetBrains Mono for the terminal feed.
+
+Tasks:
+1. `npm install framer-motion lucide-react`
+2. Update `src/app/layout.tsx` to include JetBrains Mono, Space Grotesk, and Inter from `next/font/google`. Apply them globally.
+3. Update `src/app/globals.css` with the right Tailwind directives. Make the `body` background `#09090B` and text `#A1A1AA`.
+4. Overwrite `src/app/page.tsx` entirely with a single-page interactive layout using 'use client' where framer-motion requires it.
+5. Provide high-quality spacing, typography, and hover states using the Spokbee UI rules.
+6. Commit everything to git with message "feat: build girl4tech.com v1" and push to the remote repository.
+7. Once successfully pushed, exit gracefully.
