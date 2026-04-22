@@ -8,6 +8,7 @@ import {
   useSpring,
   AnimatePresence,
 } from "framer-motion";
+import { ExternalLink, Sparkles } from "lucide-react";
 
 /* ─────────────────────────────────────────────
    Atmosphere presets — warm peach → cool ethereal
@@ -265,6 +266,135 @@ function StatPill({ label, value }: { label: string; value: string }) {
   );
 }
 
+/* ─────────────────────────────────────────────
+   AI Marketplace App Card
+   ───────────────────────────────────────────── */
+const marketplaceApps = [
+  {
+    title: "1000 Books Scanner",
+    description:
+      "A mobile-first PWA for kids. Uses Gemini 1.5 Vision AI to instantly scan book covers, cross-reference the Google Books API, and sync to a real-time Firestore cloud database.",
+    link: "https://1000-books.vercel.app",
+    tags: ["Next.js", "Gemini Vision", "Firebase Lite"],
+    gradient: "from-amber-200/40 to-orange-200/40",
+    accent: "#F59E0B",
+  },
+  {
+    title: "Ohio AI Agency",
+    description:
+      "A B2B landing page for a bespoke AI consultancy. Sells custom autonomous agents — customer service, algorithmic trading — to local businesses.",
+    link: "https://ohio-ai-agency.vercel.app",
+    tags: ["Next.js", "Framer Motion", "B2B"],
+    gradient: "from-blue-200/40 to-indigo-200/40",
+    accent: "#6366F1",
+  },
+  {
+    title: "Spokbee 4.0 Engine",
+    description:
+      "The Configurator Factory. A dual-engine parametric geometry platform that translates natural language into 3D UIs instantly.",
+    link: "#",
+    tags: ["WebGPU", "LLM AST", "Headless CAD"],
+    gradient: "from-emerald-200/40 to-teal-200/40",
+    accent: "#10B981",
+    comingSoon: true,
+  },
+];
+
+function AppCard({
+  app,
+  index,
+  blur,
+}: {
+  app: (typeof marketplaceApps)[number];
+  index: number;
+  blur: number;
+}) {
+  return (
+    <motion.a
+      href={app.comingSoon ? undefined : app.link}
+      target={app.comingSoon ? undefined : "_blank"}
+      rel="noopener noreferrer"
+      className={`group relative rounded-3xl p-8 flex flex-col gap-5 overflow-hidden ${
+        app.comingSoon ? "cursor-default" : "cursor-pointer"
+      }`}
+      style={{
+        background: "rgba(255,255,255,0.12)",
+        backdropFilter: `blur(${blur}px)`,
+        WebkitBackdropFilter: `blur(${blur}px)`,
+        border: "1px solid rgba(255,255,255,0.3)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.04)",
+      }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
+      whileHover={{
+        y: -8,
+        boxShadow: "0 20px 60px rgba(0,0,0,0.1)",
+        transition: { duration: 0.35, ease: "easeOut" },
+      }}
+    >
+      {/* Gradient background */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+      />
+
+      {/* Top row: icon + link */}
+      <div className="relative flex items-center justify-between">
+        <div
+          className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
+          style={{
+            background: `${app.accent}18`,
+            border: `1px solid ${app.accent}30`,
+          }}
+        >
+          <Sparkles size={20} style={{ color: app.accent }} />
+        </div>
+        {app.comingSoon ? (
+          <span className="text-[10px] uppercase tracking-[0.2em] font-semibold px-3 py-1 rounded-full bg-black/5 text-[#999]">
+            Coming Soon
+          </span>
+        ) : (
+          <ExternalLink
+            size={16}
+            className="text-[#bbb] group-hover:text-[#666] transition-colors"
+          />
+        )}
+      </div>
+
+      {/* Title */}
+      <h3 className="relative font-display text-xl sm:text-2xl text-[#111] leading-tight">
+        {app.title}
+      </h3>
+
+      {/* Description */}
+      <p className="relative text-sm text-[#666] font-light leading-relaxed">
+        {app.description}
+      </p>
+
+      {/* Tags */}
+      <div className="relative flex flex-wrap gap-2 mt-auto pt-2">
+        {app.tags.map((tag) => (
+          <span
+            key={tag}
+            className="text-[10px] uppercase tracking-[0.15em] font-medium px-3 py-1.5 rounded-full"
+            style={{
+              background: `${app.accent}10`,
+              color: app.accent,
+              border: `1px solid ${app.accent}20`,
+            }}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Hover glare */}
+      <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-white/30 via-transparent to-transparent" />
+    </motion.a>
+  );
+}
+
 /* ═════════════════════════════════════════════
    MAIN PAGE
    ═════════════════════════════════════════════ */
@@ -379,6 +509,46 @@ export default function Home() {
               {line}
             </motion.h2>
           ))}
+        </section>
+
+        {/* ═══ AI MARKETPLACE ═══ */}
+        <section className="flex flex-col gap-12">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <motion.p
+              className="text-[11px] uppercase tracking-[0.35em] text-[#999] font-medium"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              The AI Marketplace
+            </motion.p>
+            <motion.h2
+              className="font-display text-4xl sm:text-6xl text-[#111] leading-tight max-w-3xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              Generative apps.{" "}
+              <span className="italic font-light">Shipped.</span>
+            </motion.h2>
+            <motion.p
+              className="text-base sm:text-lg text-[#777] font-light max-w-xl"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              A curated showcase of AI-powered products — from vision AI to
+              autonomous agents to spatial compute engines.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {marketplaceApps.map((app, i) => (
+              <AppCard key={app.title} app={app} index={i} blur={blur} />
+            ))}
+          </div>
         </section>
 
         {/* ═══ CAPABILITIES — horizontal scroll cards ═══ */}
