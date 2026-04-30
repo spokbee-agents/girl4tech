@@ -387,9 +387,9 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              Building Spokbee — making
+              Building Spokbee — transforming how
               <br />
-              <span className="italic font-light">complex manufacturing simpler.</span>
+              <span className="italic font-light">complex products are sold.</span>
             </motion.h2>
             <span className="absolute -bottom-12 right-0 sm:right-12 text-[12rem] leading-none font-display text-black/[0.04] select-none pointer-events-none rotate-180">
               &ldquo;
