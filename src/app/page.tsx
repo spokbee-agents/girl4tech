@@ -70,7 +70,7 @@ function FloatingOrb({
    ───────────────────────────────────────────── */
 function MaskedWord({ children, delay }: { children: React.ReactNode; delay: number }) {
   return (
-    <span className="inline-flex overflow-hidden pb-[0.2em] -mb-[0.2em] align-bottom">
+    <span className="inline-flex overflow-hidden py-[0.1em] -my-[0.1em] pr-[0.1em] -mr-[0.1em] align-bottom">
       <motion.span
         className="inline-block"
         initial={{ y: "110%" }}
