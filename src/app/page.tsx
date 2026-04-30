@@ -1,13 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useSpring,
-  AnimatePresence,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { ExternalLink, Sparkles } from "lucide-react";
 
 /* ─────────────────────────────────────────────
@@ -23,7 +16,6 @@ function lerpColor(a: string, b: string, t: number) {
 }
 
 function getAtmosphere(t: number) {
-  // t: 0 = warm peach, 1 = cool ethereal blue
   return {
     tl: lerpColor("#FDE8D0", "#D0E8FD", t),
     tr: lerpColor("#FDDCD0", "#D0DCFD", t),
@@ -40,16 +32,13 @@ function FloatingOrb({
   initialX,
   initialY,
   color,
-  motionSpeed,
 }: {
   size: number;
   initialX: number;
   initialY: number;
   color: string;
-  motionSpeed: number;
 }) {
   const duration = 6 + Math.random() * 6;
-  const scaledDuration = duration / Math.max(motionSpeed, 0.1);
   return (
     <motion.div
       className="absolute rounded-full pointer-events-none"
@@ -63,12 +52,12 @@ function FloatingOrb({
         opacity: 0.5,
       }}
       animate={{
-        y: [0, -30 * motionSpeed, 15 * motionSpeed, 0],
-        x: [0, 20 * motionSpeed, -10 * motionSpeed, 0],
+        y: [0, -15, 8, 0],
+        x: [0, 10, -5, 0],
         scale: [1, 1.1, 0.95, 1],
       }}
       transition={{
-        duration: scaledDuration,
+        duration,
         repeat: Infinity,
         ease: "easeInOut",
       }}
@@ -77,197 +66,25 @@ function FloatingOrb({
 }
 
 /* ─────────────────────────────────────────────
-   Geometric Core — CSS abstract shape cluster
+   Masked Word — word slides up from invisible mask
    ───────────────────────────────────────────── */
-function SpatialCore({ blur }: { blur: number }) {
+function MaskedWord({ children, delay }: { children: React.ReactNode; delay: number }) {
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
-      {/* Central ring */}
-      <motion.div
-        className="absolute w-32 h-32 rounded-full border-2 border-white/30"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        style={{ backdropFilter: `blur(${blur * 0.5}px)` }}
-      />
-      {/* Inner diamond */}
-      <motion.div
-        className="absolute w-16 h-16 bg-white/20 border border-white/40"
-        style={{ rotate: 45, backdropFilter: `blur(${blur}px)` }}
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {/* Outer orbit ring */}
-      <motion.div
-        className="absolute w-48 h-48 rounded-full border border-white/15"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-      />
-      {/* Orbiting dot */}
-      <motion.div
-        className="absolute w-3 h-3 rounded-full bg-white/60 shadow-lg"
-        animate={{
-          x: [0, 80, 0, -80, 0],
-          y: [-80, 0, 80, 0, -80],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-      />
-      {/* Small accent shapes */}
-      <motion.div
-        className="absolute w-6 h-6 bg-white/10 rounded-sm border border-white/20"
-        style={{ top: "20%", right: "25%" }}
-        animate={{ rotate: [0, 90, 180, 270, 360], opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute w-4 h-4 rounded-full bg-white/15 border border-white/25"
-        style={{ bottom: "25%", left: "30%" }}
-        animate={{ scale: [0.8, 1.3, 0.8] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {/* Label */}
-      <span className="absolute bottom-4 text-[10px] uppercase tracking-[0.3em] text-white/40 font-medium">
-        Spatial Compute Core
-      </span>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   3D Glass Card — mouse-tracking parallax
-   ───────────────────────────────────────────── */
-function GlassCard3D({ blur }: { blur: number }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), {
-    stiffness: 150,
-    damping: 20,
-  });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), {
-    stiffness: 150,
-    damping: 20,
-  });
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      mouseX.set(x);
-      mouseY.set(y);
-    },
-    [mouseX, mouseY]
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
-
-  return (
-    <div style={{ perspective: 800 }} className="w-full max-w-2xl mx-auto">
-      <motion.div
-        className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden cursor-crosshair"
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-          background: "rgba(255,255,255,0.15)",
-          backdropFilter: `blur(${blur}px)`,
-          WebkitBackdropFilter: `blur(${blur}px)`,
-          border: "1px solid rgba(255,255,255,0.4)",
-          boxShadow:
-            "0 20px 60px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5)",
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    <span className="inline-block overflow-hidden align-bottom">
+      <motion.span
+        className="inline-block"
+        initial={{ y: "110%" }}
+        animate={{ y: "0%" }}
+        transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
       >
-        <SpatialCore blur={blur} />
-        {/* Glare overlay */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 50%)",
-          }}
-        />
-      </motion.div>
-    </div>
+        {children}
+      </motion.span>
+    </span>
   );
 }
 
 /* ─────────────────────────────────────────────
-   Configurator Slider Component
-   ───────────────────────────────────────────── */
-function ConfigSlider({
-  label,
-  value,
-  onChange,
-  min = 0,
-  max = 1,
-  step = 0.01,
-}: {
-  label: string;
-  value: number;
-  onChange: (v: number) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex justify-between items-center">
-        <span className="text-[11px] uppercase tracking-[0.2em] text-[#555] font-medium">
-          {label}
-        </span>
-        <span className="text-[11px] tabular-nums text-[#999] font-mono">
-          {(value * 100).toFixed(0)}%
-        </span>
-      </div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full h-1 appearance-none rounded-full bg-black/10 outline-none cursor-pointer
-          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
-          [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-md
-          [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-black/10
-          [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:transition-transform
-          [&::-webkit-slider-thumb]:hover:scale-125"
-      />
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   Stat Pill — animated counters in hero
-   ───────────────────────────────────────────── */
-function StatPill({ label, value }: { label: string; value: string }) {
-  return (
-    <motion.div
-      className="flex flex-col items-center gap-1 px-6 py-3 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.2 }}
-    >
-      <span className="text-2xl sm:text-3xl font-display font-semibold text-[#111]">
-        {value}
-      </span>
-      <span className="text-[10px] uppercase tracking-[0.2em] text-[#666]">
-        {label}
-      </span>
-    </motion.div>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   AI Marketplace App Card
+   AI Marketplace App Card (kept for future use)
    ───────────────────────────────────────────── */
 const marketplaceApps = [
   {
@@ -303,11 +120,9 @@ const marketplaceApps = [
 function AppCard({
   app,
   index,
-  blur,
 }: {
   app: (typeof marketplaceApps)[number];
   index: number;
-  blur: number;
 }) {
   return (
     <motion.a
@@ -319,8 +134,8 @@ function AppCard({
       }`}
       style={{
         background: "rgba(255,255,255,0.12)",
-        backdropFilter: `blur(${blur}px)`,
-        WebkitBackdropFilter: `blur(${blur}px)`,
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
         border: "1px solid rgba(255,255,255,0.3)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.04)",
       }}
@@ -334,12 +149,9 @@ function AppCard({
         transition: { duration: 0.35, ease: "easeOut" },
       }}
     >
-      {/* Gradient background */}
       <div
         className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
       />
-
-      {/* Top row: icon + link */}
       <div className="relative flex items-center justify-between">
         <div
           className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
@@ -361,18 +173,12 @@ function AppCard({
           />
         )}
       </div>
-
-      {/* Title */}
       <h3 className="relative font-display text-xl sm:text-2xl text-[#111] leading-tight">
         {app.title}
       </h3>
-
-      {/* Description */}
       <p className="relative text-sm text-[#666] font-light leading-relaxed">
         {app.description}
       </p>
-
-      {/* Tags */}
       <div className="relative flex flex-wrap gap-2 mt-auto pt-2">
         {app.tags.map((tag) => (
           <span
@@ -388,8 +194,6 @@ function AppCard({
           </span>
         ))}
       </div>
-
-      {/* Hover glare */}
       <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-white/30 via-transparent to-transparent" />
     </motion.a>
   );
@@ -399,32 +203,13 @@ function AppCard({
    MAIN PAGE
    ═════════════════════════════════════════════ */
 export default function Home() {
-  // Configurator state
-  const [atmosphere, setAtmosphere] = useState(0.3);
-  const [diffusion, setDiffusion] = useState(0.5);
-  const [motionSpeed, setMotionSpeed] = useState(0.5);
-  const [panelOpen, setPanelOpen] = useState(false);
-
-  // Derived values
-  const blur = 8 + diffusion * 32; // 8px to 40px
-  const atmo = getAtmosphere(atmosphere);
-
-  // Keyboard shortcut to toggle panel
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "c" && !e.metaKey && !e.ctrlKey) {
-        setPanelOpen((p) => !p);
-      }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, []);
+  const atmo = getAtmosphere(0.3);
 
   return (
     <main className="min-h-screen relative font-sans overflow-x-hidden selection:bg-black/10">
       {/* ── Dynamic Background ── */}
       <div
-        className="fixed inset-0 -z-10 transition-colors duration-700"
+        className="fixed inset-0 -z-10"
         style={{
           background: `
             radial-gradient(at 0% 0%, ${atmo.tl} 0%, transparent 50%),
@@ -438,80 +223,179 @@ export default function Home() {
 
       {/* ── Floating Orbs ── */}
       <div className="fixed inset-0 -z-5 overflow-hidden pointer-events-none">
-        <FloatingOrb size={300} initialX={10} initialY={20} color={atmo.tl} motionSpeed={motionSpeed} />
-        <FloatingOrb size={200} initialX={70} initialY={60} color={atmo.tr} motionSpeed={motionSpeed} />
-        <FloatingOrb size={250} initialX={50} initialY={10} color={atmo.br} motionSpeed={motionSpeed} />
-        <FloatingOrb size={180} initialX={85} initialY={80} color={atmo.bl} motionSpeed={motionSpeed} />
+        <FloatingOrb size={300} initialX={10} initialY={20} color={atmo.tl} />
+        <FloatingOrb size={200} initialX={70} initialY={60} color={atmo.tr} />
+        <FloatingOrb size={250} initialX={50} initialY={10} color={atmo.br} />
+        <FloatingOrb size={180} initialX={85} initialY={80} color={atmo.bl} />
       </div>
 
       {/* ── Content ── */}
-      <div className="mx-auto max-w-6xl px-6 sm:px-12 py-24 sm:py-32 flex flex-col gap-32 relative z-10">
-        {/* ═══ HERO ═══ */}
-        <section className="min-h-[85vh] flex flex-col items-center justify-center text-center gap-10">
+      <div className="mx-auto max-w-6xl px-6 sm:px-12 py-24 sm:py-32 flex flex-col gap-40 relative z-10">
+
+        {/* ═══ HERO — staggered editorial typography ═══ */}
+        <section className="min-h-[90vh] flex flex-col justify-center gap-16">
+          {/* Top label */}
           <motion.p
-            className="text-[11px] uppercase tracking-[0.35em] text-[#999] font-medium"
+            className="text-[11px] uppercase tracking-[0.4em] text-[#999] font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
           >
             girl4tech.com
           </motion.p>
 
-          <motion.h1
-            className="font-display text-5xl sm:text-7xl lg:text-[5.5rem] text-[#111] leading-[1.05] tracking-tight max-w-5xl"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            Building the autonomous
-            <br />
-            <span className="italic font-light">future of business.</span>
-          </motion.h1>
+          {/* Headline — staggered word reveal */}
+          <div className="flex flex-col gap-3">
+            <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
+              <MaskedWord delay={0.3}>Building</MaskedWord>{" "}
+              <MaskedWord delay={0.4}>the</MaskedWord>
+            </h1>
+            <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
+              <MaskedWord delay={0.5}>autonomous</MaskedWord>
+            </h1>
+            <h1 className="font-display italic font-light text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
+              <MaskedWord delay={0.65}>future</MaskedWord>{" "}
+              <MaskedWord delay={0.75}>of</MaskedWord>{" "}
+              <MaskedWord delay={0.85}>business.</MaskedWord>
+            </h1>
+          </div>
 
-          <motion.p
-            className="text-lg sm:text-xl text-[#666] font-light tracking-tight max-w-xl"
+          {/* Subtitle — offset to the right */}
+          <motion.div
+            className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 sm:pl-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="hidden sm:block w-16 h-px bg-[#ccc]" />
+            <p className="text-lg sm:text-xl text-[#666] font-light tracking-tight">
+              <span className="font-semibold text-[#333]">Karina C.</span>{" "}
+              AI Solutions Architect &amp; Founder.
+            </p>
+          </motion.div>
+
+          {/* Discipline pills */}
+          <motion.div
+            className="flex gap-3 flex-wrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
           >
-            <span className="font-semibold text-[#333]">Karina C.</span>{" "}
-            AI Solutions Architect &amp; Founder.
-          </motion.p>
-
-          {/* Stats row */}
-          <div className="flex gap-4 sm:gap-6 flex-wrap justify-center">
-            <StatPill value="AI" label="Agents" />
-            <StatPill value="OPS" label="Automation" />
-            <StatPill value="3D" label="Parametric 3D" />
-          </div>
-
-          {/* 3D Glass Card */}
-          <div className="w-full mt-8">
-            <GlassCard3D blur={blur} />
-          </div>
+            {["AI Agents", "Automation", "Parametric 3D"].map((label) => (
+              <span
+                key={label}
+                className="text-[10px] uppercase tracking-[0.25em] font-medium px-5 py-2.5 rounded-full
+                  bg-white/20 backdrop-blur-xl border border-white/30 text-[#555]"
+              >
+                {label}
+              </span>
+            ))}
+          </motion.div>
         </section>
 
-        {/* ═══ MANIFESTO (punchy, no paragraphs) ═══ */}
-        <section className="flex flex-col gap-6 max-w-4xl mx-auto text-center">
-          {[
-            "Manual workflows are legacy overhead.",
-            "Businesses must operate autonomously.",
-            "AI is the new infrastructure.",
-          ].map((line, i) => (
+        {/* ═══ MANIFESTO — editorial magazine spread ═══ */}
+        <section className="flex flex-col gap-24 max-w-5xl mx-auto">
+          {/* Opening quote */}
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1 }}
+          >
+            <span className="absolute -top-16 -left-4 text-[12rem] leading-none font-display text-black/[0.04] select-none pointer-events-none">
+              &ldquo;
+            </span>
+            <div className="flex flex-col gap-8 pl-0 sm:pl-16">
+              <motion.h2
+                className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#111] leading-[1.1] tracking-tight"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Manual workflows are
+                <br />
+                <span className="italic font-light">legacy overhead.</span>
+              </motion.h2>
+            </div>
+          </motion.div>
+
+          {/* Divider */}
+          <motion.div
+            className="flex items-center gap-6"
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            style={{ transformOrigin: "left" }}
+          >
+            <div className="flex-1 h-px bg-gradient-to-r from-black/10 to-transparent" />
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[#bbb] font-medium whitespace-nowrap">
+              The thesis
+            </span>
+            <div className="flex-1 h-px bg-gradient-to-l from-black/10 to-transparent" />
+          </motion.div>
+
+          {/* Second statement — right-aligned for asymmetry */}
+          <motion.div
+            className="flex justify-end"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1 }}
+          >
+            <div className="max-w-2xl text-right">
+              <motion.h2
+                className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#111] leading-[1.1] tracking-tight"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Businesses must operate
+                <br />
+                <span className="italic font-light">autonomously.</span>
+              </motion.h2>
+            </div>
+          </motion.div>
+
+          {/* Thin line accent */}
+          <motion.div
+            className="w-24 h-px bg-black/10 mx-auto"
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          />
+
+          {/* Third statement — centered, with closing quote */}
+          <motion.div
+            className="relative text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1 }}
+          >
             <motion.h2
-              key={i}
-              className="font-display text-3xl sm:text-5xl text-[#111] leading-snug"
-              initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="font-display text-4xl sm:text-6xl lg:text-7xl text-[#111] leading-[1.1] tracking-tight"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: i * 0.15, ease: "easeOut" }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              {line}
+              AI is the new
+              <br />
+              <span className="italic font-light">infrastructure.</span>
             </motion.h2>
-          ))}
+            <span className="absolute -bottom-12 right-0 sm:right-12 text-[12rem] leading-none font-display text-black/[0.04] select-none pointer-events-none rotate-180">
+              &ldquo;
+            </span>
+          </motion.div>
         </section>
 
-        {/* ═══ AI MARKETPLACE ═══ */}
+        {/* ═══ AI MARKETPLACE — temporarily hidden ═══ */}
+        {/*
         <section className="flex flex-col gap-12">
           <div className="flex flex-col items-center gap-4 text-center">
             <motion.p
@@ -546,13 +430,14 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {marketplaceApps.map((app, i) => (
-              <AppCard key={app.title} app={app} index={i} blur={blur} />
+              <AppCard key={app.title} app={app} index={i} />
             ))}
           </div>
         </section>
+        */}
 
-        {/* ═══ CAPABILITIES — horizontal scroll cards ═══ */}
-        <section className="flex flex-col gap-8">
+        {/* ═══ CAPABILITIES — editorial cards ═══ */}
+        <section className="flex flex-col gap-12">
           <motion.p
             className="text-[11px] uppercase tracking-[0.3em] text-[#999] font-medium text-center"
             initial={{ opacity: 0 }}
@@ -566,7 +451,7 @@ export default function Home() {
             {[
               {
                 title: "Generative Configuration",
-                sub: "PDF → parametric 3D. Instantly.",
+                sub: "PDF to parametric 3D. Instantly.",
                 tag: "CORE",
               },
               {
@@ -585,8 +470,8 @@ export default function Home() {
                 className="group relative rounded-3xl p-8 flex flex-col gap-4 cursor-default overflow-hidden"
                 style={{
                   background: "rgba(255,255,255,0.2)",
-                  backdropFilter: `blur(${blur}px)`,
-                  WebkitBackdropFilter: `blur(${blur}px)`,
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
                   border: "1px solid rgba(255,255,255,0.35)",
                   boxShadow: "0 8px 32px rgba(0,0,0,0.04)",
                 }}
@@ -607,7 +492,6 @@ export default function Home() {
                   {card.title}
                 </h3>
                 <p className="text-sm text-[#666] font-light">{card.sub}</p>
-                {/* Hover glow */}
                 <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-white/20 to-transparent" />
               </motion.div>
             ))}
@@ -645,83 +529,10 @@ export default function Home() {
         <footer className="pt-16 pb-12 flex flex-col sm:flex-row justify-between items-center gap-6 border-t border-black/5 text-sm text-[#888]">
           <p className="font-display italic text-lg text-[#444]">girl4tech</p>
           <p className="text-[11px] tracking-wider text-[#bbb]">
-            Press <kbd className="px-1.5 py-0.5 rounded bg-black/5 text-[#666] font-mono text-[10px]">C</kbd> to configure this reality
+            &copy; 2026 Karina C. All rights reserved.
           </p>
         </footer>
       </div>
-
-      {/* ═══════════════════════════════════════
-           REALITY CONFIGURATOR — floating panel
-         ═══════════════════════════════════════ */}
-
-      {/* Toggle button */}
-      <motion.button
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-2xl flex items-center justify-center
-          text-[#555] hover:text-[#111] transition-colors"
-        style={{
-          background: "rgba(255,255,255,0.3)",
-          backdropFilter: `blur(${blur}px)`,
-          WebkitBackdropFilter: `blur(${blur}px)`,
-          border: "1px solid rgba(255,255,255,0.5)",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-        }}
-        onClick={() => setPanelOpen(!panelOpen)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        title="Reality Configurator"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-        </svg>
-      </motion.button>
-
-      {/* Panel */}
-      <AnimatePresence>
-        {panelOpen && (
-          <motion.div
-            className="fixed bottom-20 right-6 z-50 w-72 rounded-3xl p-6 flex flex-col gap-5"
-            style={{
-              background: "rgba(255,255,255,0.25)",
-              backdropFilter: `blur(${Math.max(blur, 24)}px)`,
-              WebkitBackdropFilter: `blur(${Math.max(blur, 24)}px)`,
-              border: "1px solid rgba(255,255,255,0.45)",
-              boxShadow: "0 16px 48px rgba(0,0,0,0.08)",
-            }}
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#777] font-semibold">
-                Reality Configurator
-              </span>
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            </div>
-
-            <ConfigSlider
-              label="Atmosphere"
-              value={atmosphere}
-              onChange={setAtmosphere}
-            />
-            <ConfigSlider
-              label="Diffusion"
-              value={diffusion}
-              onChange={setDiffusion}
-            />
-            <ConfigSlider
-              label="Motion"
-              value={motionSpeed}
-              onChange={setMotionSpeed}
-            />
-
-            <p className="text-[10px] text-[#aaa] text-center mt-1">
-              This site is a live configurator.
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   );
 }
