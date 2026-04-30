@@ -247,16 +247,18 @@ export default function Home() {
           {/* Headline — staggered word reveal */}
           <div className="flex flex-col gap-3">
             <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
-              <MaskedWord delay={0.3}>Building</MaskedWord>{" "}
-              <MaskedWord delay={0.4}>the</MaskedWord>
+              <MaskedWord delay={0.3}>Exploring</MaskedWord>{" "}
+              <MaskedWord delay={0.4}>what</MaskedWord>
             </h1>
             <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
-              <MaskedWord delay={0.5}>autonomous</MaskedWord>
+              <MaskedWord delay={0.5}>happens</MaskedWord>{" "}
+              <MaskedWord delay={0.6}>when</MaskedWord>
             </h1>
             <h1 className="font-display italic font-light text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
-              <MaskedWord delay={0.65}>future</MaskedWord>{" "}
-              <MaskedWord delay={0.75}>of</MaskedWord>{" "}
-              <MaskedWord delay={0.85}>business.</MaskedWord>
+              <MaskedWord delay={0.7}>machines</MaskedWord>{" "}
+              <MaskedWord delay={0.8}>learn</MaskedWord>{" "}
+              <MaskedWord delay={0.9}>to</MaskedWord>{" "}
+              <MaskedWord delay={1.0}>help.</MaskedWord>
             </h1>
           </div>
 
@@ -265,12 +267,13 @@ export default function Home() {
             className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 sm:pl-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="hidden sm:block w-16 h-px bg-[#ccc]" />
             <p className="text-lg sm:text-xl text-[#666] font-light tracking-tight">
-              <span className="font-semibold text-[#333]">Karina C.</span>{" "}
-              AI Solutions Architect &amp; Founder.
+              Hi, I&apos;m{" "}
+              <span className="font-semibold text-[#333]">Karina</span>.
+              Developer, founder, and mother exploring the edge of AI.
             </p>
           </motion.div>
 
@@ -279,9 +282,9 @@ export default function Home() {
             className="flex gap-3 flex-wrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.5 }}
+            transition={{ duration: 0.8, delay: 1.6 }}
           >
-            {["AI Agents", "Automation", "Parametric 3D"].map((label) => (
+            {["AI Assistants", "3D Web", "Generative Tools"].map((label) => (
               <span
                 key={label}
                 className="text-[10px] uppercase tracking-[0.25em] font-medium px-5 py-2.5 rounded-full
@@ -314,9 +317,9 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               >
-                Manual workflows are
+                Technology shouldn&apos;t feel
                 <br />
-                <span className="italic font-light">legacy overhead.</span>
+                <span className="italic font-light">like a barrier.</span>
               </motion.h2>
             </div>
           </motion.div>
@@ -332,7 +335,7 @@ export default function Home() {
           >
             <div className="flex-1 h-px bg-gradient-to-r from-black/10 to-transparent" />
             <span className="text-[10px] uppercase tracking-[0.4em] text-[#bbb] font-medium whitespace-nowrap">
-              The thesis
+              What I believe
             </span>
             <div className="flex-1 h-px bg-gradient-to-l from-black/10 to-transparent" />
           </motion.div>
@@ -353,9 +356,9 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
-                Businesses must operate
+                AI can handle the busywork,
                 <br />
-                <span className="italic font-light">autonomously.</span>
+                <span className="italic font-light">so we can focus on what matters.</span>
               </motion.h2>
             </div>
           </motion.div>
@@ -384,9 +387,9 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              AI is the new
+              Building Spokbee — making
               <br />
-              <span className="italic font-light">infrastructure.</span>
+              <span className="italic font-light">complex manufacturing simpler.</span>
             </motion.h2>
             <span className="absolute -bottom-12 right-0 sm:right-12 text-[12rem] leading-none font-display text-black/[0.04] select-none pointer-events-none rotate-180">
               &ldquo;
@@ -450,18 +453,18 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               {
-                title: "Generative Configuration",
-                sub: "PDF to parametric 3D. Instantly.",
+                title: "3D on the Web",
+                sub: "Turning documents into interactive 3D models you can explore in a browser.",
                 tag: "CORE",
               },
               {
-                title: "Spatial Computing",
-                sub: "Industrial logic rendered to glass.",
+                title: "Spatial Interfaces",
+                sub: "Bringing industrial data into the physical world through mixed reality.",
                 tag: "XR",
               },
               {
-                title: "Agentic Engineering",
-                sub: "Swarms of intelligence. Automated.",
+                title: "AI Assistants",
+                sub: "Small, helpful agents that quietly handle the repetitive stuff.",
                 tag: "AI",
               },
             ].map((card, i) => (
@@ -507,8 +510,8 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Let&apos;s build something{" "}
-            <span className="italic font-light">impossible.</span>
+            Let&apos;s make something{" "}
+            <span className="italic font-light">together.</span>
           </motion.h2>
           <motion.a
             href="mailto:hello@girl4tech.com"
