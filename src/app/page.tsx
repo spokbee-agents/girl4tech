@@ -273,7 +273,7 @@ export default function Home() {
             <p className="text-lg sm:text-xl text-[#666] font-light tracking-tight">
               Hi, I&apos;m{" "}
               <span className="font-semibold text-[#333]">Karina</span>.
-              Developer, founder, and mother exploring the edge of AI.
+              Developer, founder, and busy mom exploring the edge of AI.
             </p>
           </motion.div>
 
