@@ -1,0 +1,24 @@
+You are an Elite Frontend Engineer updating the `girl4tech` personal website.
+The user (Karina C) needs to launch this site THIS WEEK ahead of the Spokbee 4.0 launch. She wants a new section: An "AI App Marketplace" where she can showcase the AI-powered apps she has built.
+
+Tasks:
+1. Open `src/app/page.tsx`
+2. Keep the current "Organic Spatial" Hero (the mouse-tracking 3D card) and the Reality Configurator. They are awesome.
+3. Below the manifesto, add a massive new section called "The AI Marketplace" or "Generative Showcase".
+4. Design a beautiful, Apple-App-Store-style grid of "Apps" she has built.
+5. Create 3 initial App Cards using data from our recent builds:
+   - App 1: "1000 Books Scanner" 
+     - Description: A mobile-first PWA for kids. Uses Gemini 1.5 Vision AI to instantly scan book covers, cross-reference the Google Books API, and sync to a real-time Firestore cloud database.
+     - Link: `https://1000-books.vercel.app`
+     - Tags: Next.js, Gemini Vision, Firebase Lite.
+   - App 2: "Ohio AI Agency"
+     - Description: A B2B landing page for a bespoke AI consultancy. Sells custom autonomous agents (customer service, algorithmic trading) to local businesses.
+     - Link: `https://ohio-ai-agency.vercel.app`
+     - Tags: Next.js, Framer Motion, B2B.
+   - App 3: "Spokbee 4.0 Engine"
+     - Description: The Configurator Factory. A dual-engine parametric geometry platform that translates natural language into 3D UIs instantly.
+     - Link: `#` (Coming Soon)
+     - Tags: WebGPU, LLM AST, Headless CAD.
+6. Make the App Cards highly interactive using `framer-motion` (hover lifts, glassmorphism, external link icons).
+7. Commit with "feat: add AI App Marketplace showcase grid" and push to main.
+8. Exit gracefully.

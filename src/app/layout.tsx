@@ -18,6 +18,9 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   title: "girl4tech — Karina C",
   description: "Technology should feel like magic, not mechanics.",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

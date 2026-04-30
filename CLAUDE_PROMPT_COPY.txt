@@ -1,0 +1,23 @@
+You are an Elite Frontend Engineer updating the `girl4tech` website.
+The user (Karina C) likes the current "Organic Spatial" layout (the 3D mouse tracking card, the Reality Configurator sliders, the App Marketplace grid), but she wants to change the text. She explicitly stated: "I like the look and the text but i don't like what it says..."
+
+Task:
+Open `src/app/page.tsx` and rewrite the core copy/messaging to be more grounded, professional, and focused on her actual business value, while keeping the punchy, high-end editorial formatting.
+
+1. **Hero Section**:
+   - Change "I don't write software. I orchestrate reality." to "Building the autonomous future of business."
+   - Change "Karina C. Architect of the generative web." to "Karina C. AI Solutions Architect & Founder."
+   - Change the three `StatPill` labels to things that reflect her business: "AI Agents", "Automation", "Parametric 3D".
+
+2. **The Manifesto Section** (The 3 massive punchy lines):
+   - Replace the 3 strings in the manifesto array:
+     - Old: "Static UIs are legacy technology." -> New: "Manual workflows are legacy overhead."
+     - Old: "Interfaces must generate themselves." -> New: "Businesses must operate autonomously."
+     - Old: "Language is the new compiler." -> New: "AI is the new infrastructure."
+
+3. **The AI App Marketplace Grid**:
+   - Ensure the marketplace still showcases her three apps (1000 Books, Ohio AI Agency, Spokbee Engine), but ensure the descriptions sound like a professional portfolio rather than arrogant flexes. Keep them descriptive of the tech stack (Next.js, Gemini Vision, WebGPU, etc.).
+
+4. Do NOT break the Framer Motion animations or the Reality Configurator sliders.
+5. Commit with "refactor: update hero messaging and manifesto copy for professional AI agency positioning" and push.
+6. Exit gracefully.

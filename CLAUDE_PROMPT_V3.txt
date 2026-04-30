@@ -1,0 +1,33 @@
+You are an Elite Frontend Engineer building Karina C's personal website: girl4tech.com.
+
+The user LOVED the new "Organic Spatial" (light mode, serene, glassmorphism) aesthetic, but gave this feedback:
+"I don’t like the messaging also there is nothing “cool” on the site it’s just a few paragraphs. That’s BoRING"
+
+We need to keep the elegant, serene, light aesthetic but make the site an absolute flex of frontend engineering. It needs to be highly interactive, punchy, and prove that she builds "Configurators".
+
+Write a completely new `src/app/page.tsx` using `framer-motion` (and any necessary React hooks) with these features:
+
+1. THE MESSAGING (Punchy & Bold):
+   - No long paragraphs. Use massive, editorial typography (Playfair Display for headers, Inter for small details).
+   - Hero text: "I don't write software. I orchestrate reality."
+   - Subtext: "Karina C. Architect of the generative web."
+
+2. COOL FEATURE 1: 3D Mouse-Tracking Glass Card
+   - In the hero section, create a beautiful, massive frosted glass card.
+   - Use `framer-motion` (`useMotionValue`, `useTransform`) to make the card tilt in 3D space tracking the user's mouse movements. Inside the card, put a sleek abstract geometric arrangement or a "Spatial Compute Core" visual made of CSS shapes.
+
+3. COOL FEATURE 2: The "Reality Configurator" (Massive Flex)
+   - Since Karina builds product configurators, the website ITSELF should be configurable.
+   - Add a floating control panel (glassmorphic) stuck to the bottom or side with 3 sliders:
+     - "Atmosphere" (Changes the background gradient colors from warm peaches to cool ethereal blues).
+     - "Diffusion" (Changes the backdrop-blur intensity on the glass elements from crisp to heavy frosted).
+     - "Motion" (Controls the speed of floating elements).
+   - Wire these sliders up to React state so the *entire website* reacts in real-time as the user drags them. THIS IS CRITICAL.
+
+Requirements:
+- Completely overwrite `src/app/page.tsx` with a beautifully structured, single-page React component.
+- Ensure all hooks (`useState`, `useEffect`, `useMotionValue`, `useTransform`, `useSpring`) are properly imported from `framer-motion` and `react`.
+- Use Tailwind CSS for styling.
+- Keep the light, airy, serene, Apple Vision Pro vibe.
+- Commit everything with "feat: add interactive 3D parallax and live environment configurator" and push to remote.
+- Exit gracefully.
