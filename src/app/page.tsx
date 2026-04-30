@@ -70,7 +70,7 @@ function FloatingOrb({
    ───────────────────────────────────────────── */
 function MaskedWord({ children, delay }: { children: React.ReactNode; delay: number }) {
   return (
-    <span className="inline-block overflow-hidden align-bottom">
+    <span className="inline-flex overflow-hidden pb-[0.2em] -mb-[0.2em] align-bottom">
       <motion.span
         className="inline-block"
         initial={{ y: "110%" }}
@@ -246,15 +246,15 @@ export default function Home() {
 
           {/* Headline — staggered word reveal */}
           <div className="flex flex-col gap-3">
-            <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
+            <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[1.1] tracking-tight">
               <MaskedWord delay={0.3}>Exploring</MaskedWord>{" "}
               <MaskedWord delay={0.4}>what</MaskedWord>
             </h1>
-            <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
+            <h1 className="font-display text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[1.1] tracking-tight">
               <MaskedWord delay={0.5}>happens</MaskedWord>{" "}
               <MaskedWord delay={0.6}>when</MaskedWord>
             </h1>
-            <h1 className="font-display italic font-light text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[0.95] tracking-tight">
+            <h1 className="font-display italic font-light text-6xl sm:text-8xl lg:text-[7rem] text-[#111] leading-[1.1] tracking-tight">
               <MaskedWord delay={0.7}>machines</MaskedWord>{" "}
               <MaskedWord delay={0.8}>learn</MaskedWord>{" "}
               <MaskedWord delay={0.9}>to</MaskedWord>{" "}
