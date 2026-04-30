@@ -273,7 +273,7 @@ const marketplaceApps = [
   {
     title: "1000 Books Scanner",
     description:
-      "A mobile-first PWA for kids. Uses Gemini 1.5 Vision AI to instantly scan book covers, cross-reference the Google Books API, and sync to a real-time Firestore cloud database.",
+      "A mobile-first PWA that helps kids track their reading goals. Powered by Gemini 1.5 Vision AI for instant book-cover scanning, Google Books API for metadata, and real-time Firestore sync.",
     link: "https://1000-books.vercel.app",
     tags: ["Next.js", "Gemini Vision", "Firebase Lite"],
     gradient: "from-amber-200/40 to-orange-200/40",
@@ -282,7 +282,7 @@ const marketplaceApps = [
   {
     title: "Ohio AI Agency",
     description:
-      "A B2B landing page for a bespoke AI consultancy. Sells custom autonomous agents — customer service, algorithmic trading — to local businesses.",
+      "A B2B platform for a specialized AI consultancy delivering custom autonomous agents — from customer service automation to algorithmic trading — for Ohio-based businesses.",
     link: "https://ohio-ai-agency.vercel.app",
     tags: ["Next.js", "Framer Motion", "B2B"],
     gradient: "from-blue-200/40 to-indigo-200/40",
@@ -291,7 +291,7 @@ const marketplaceApps = [
   {
     title: "Spokbee 4.0 Engine",
     description:
-      "The Configurator Factory. A dual-engine parametric geometry platform that translates natural language into 3D UIs instantly.",
+      "A dual-engine parametric geometry platform that translates natural language into interactive 3D interfaces. Built on WebGPU with LLM-driven AST generation.",
     link: "#",
     tags: ["WebGPU", "LLM AST", "Headless CAD"],
     gradient: "from-emerald-200/40 to-teal-200/40",
@@ -463,9 +463,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            I don&apos;t write software.
+            Building the autonomous
             <br />
-            <span className="italic font-light">I orchestrate reality.</span>
+            <span className="italic font-light">future of business.</span>
           </motion.h1>
 
           <motion.p
@@ -475,14 +475,14 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <span className="font-semibold text-[#333]">Karina C.</span>{" "}
-            Architect of the generative web.
+            AI Solutions Architect &amp; Founder.
           </motion.p>
 
           {/* Stats row */}
           <div className="flex gap-4 sm:gap-6 flex-wrap justify-center">
-            <StatPill value="3D" label="Configurators" />
-            <StatPill value="AI" label="Orchestration" />
-            <StatPill value="XR" label="Spatial" />
+            <StatPill value="AI" label="Agents" />
+            <StatPill value="OPS" label="Automation" />
+            <StatPill value="3D" label="Parametric 3D" />
           </div>
 
           {/* 3D Glass Card */}
@@ -494,9 +494,9 @@ export default function Home() {
         {/* ═══ MANIFESTO (punchy, no paragraphs) ═══ */}
         <section className="flex flex-col gap-6 max-w-4xl mx-auto text-center">
           {[
-            "Static interfaces are dead.",
-            "The future is parametric, generative, alive.",
-            "I build the systems that make it breathe.",
+            "Manual workflows are legacy overhead.",
+            "Businesses must operate autonomously.",
+            "AI is the new infrastructure.",
           ].map((line, i) => (
             <motion.h2
               key={i}
